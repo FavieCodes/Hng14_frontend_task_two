@@ -2,7 +2,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 103px;
+  width: 80px; /* Reduced from 103px */
   height: 100vh;
   background: var(--bg-sidebar);
   border-radius: 0 20px 20px 0;
@@ -12,7 +12,7 @@
   align-items: center;
   z-index: 100;
   overflow: hidden;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, width 0.3s ease;
 }
 
 .sidebar-logo {
@@ -22,7 +22,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 32px 0;
+  padding: 28px 0;
   position: relative;
   overflow: hidden;
 }
@@ -41,48 +41,60 @@
 .logo-container {
   position: relative;
   z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 28px;
   padding-bottom: 32px;
   width: 100%;
 }
 
-.profile-icon {
-  color: var(--text-secondary);
+.profile-container {
   cursor: pointer;
   transition: all 0.2s;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid transparent;
 }
 
-.profile-icon:hover {
-  color: var(--primary);
-  background: rgba(124, 93, 250, 0.1);
+.profile-container:hover {
   transform: scale(1.05);
+  border-color: var(--primary);
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 /* Responsive Sidebar */
 @media (max-width: 768px) {
   .sidebar {
-    width: 72px;
+    width: 64px;
   }
   
   .sidebar-logo {
-    padding: 24px 0;
+    padding: 20px 0;
   }
   
   .logo-container svg {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
+  }
+  
+  .profile-container {
+    width: 40px;
+    height: 40px;
   }
 }
 

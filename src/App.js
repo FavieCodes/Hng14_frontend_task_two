@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { useInvoices } from './hooks/useInvoices';
 import InvoiceList from './components/InvoiceList/InvoiceList';
 import InvoiceDetail from './components/InvoiceDetail/InvoiceDetail';

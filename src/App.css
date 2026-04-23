@@ -69,7 +69,7 @@ body {
 
 .main-content {
   flex: 1;
-  margin-left: 103px;
+  margin-left: 80px; /* Matches new sidebar width */
   padding: 60px 48px;
   transition: margin-left 0.3s ease;
   background: var(--bg-main);
@@ -195,7 +195,7 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 72px;
+    margin-left: 64px; /* Matches smaller sidebar on tablet */
     padding: 32px 20px;
   }
   
