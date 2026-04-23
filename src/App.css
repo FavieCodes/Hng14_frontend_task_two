@@ -1,27 +1,50 @@
-/* Light Mode (default) */
+/* Light Mode - Default */
+:root,
 .light-mode {
-  --bg-primary: #F8F8FB;
-  --bg-secondary: #FFFFFF;
-  --bg-tertiary: #F9FAFE;
-  --bg-input: #FFFFFF;
+  --bg-main: #F8F8FB;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #1E2139;
+  --bg-form: #FFFFFF;
+  --bg-item: #F9FAFE;
   --text-primary: #0C0E16;
   --text-secondary: #888EB0;
+  --text-tertiary: #7E88C3;
   --border-color: #DFE3FA;
-  --primary-color: #7C5DFA;
-  --danger-color: #EC5757;
+  --border-light: #F4F5F9;
+  --primary: #7C5DFA;
+  --primary-hover: #9277FF;
+  --danger: #EC5757;
+  --danger-hover: #FF9797;
+  --draft-bg: #F4F5F9;
+  --draft-text: #373B53;
+  --pending-bg: #FFF2E6;
+  --pending-text: #FF8F00;
+  --paid-bg: #E6F9F3;
+  --paid-text: #33D69F;
 }
 
 /* Dark Mode */
 .dark-mode {
-  --bg-primary: #141625;
-  --bg-secondary: #1E2139;
-  --bg-tertiary: #252945;
-  --bg-input: #1E2139;
+  --bg-main: #141625;
+  --bg-card: #1E2139;
+  --bg-sidebar: #1E2139;
+  --bg-form: #1E2139;
+  --bg-item: #252945;
   --text-primary: #FFFFFF;
   --text-secondary: #DFE3FA;
+  --text-tertiary: #DFE3FA;
   --border-color: #252945;
-  --primary-color: #7C5DFA;
-  --danger-color: #EC5757;
+  --border-light: #252945;
+  --primary: #7C5DFA;
+  --primary-hover: #9277FF;
+  --danger: #EC5757;
+  --danger-hover: #FF9797;
+  --draft-bg: #292C44;
+  --draft-text: #DFE3FA;
+  --pending-bg: #3B2E24;
+  --pending-text: #FF8F00;
+  --paid-bg: #1F2B3C;
+  --paid-text: #33D69F;
 }
 
 * {
@@ -31,160 +54,185 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
-  background: var(--bg-primary);
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  background: var(--bg-main);
   color: var(--text-primary);
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
 }
 
-.app {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 24px;
+/* App Layout with Sidebar */
+.app-layout {
+  display: flex;
   min-height: 100vh;
 }
 
+.main-content {
+  flex: 1;
+  margin-left: 103px;
+  padding: 60px 48px;
+  transition: margin-left 0.3s ease;
+  background: var(--bg-main);
+}
+
+/* Header Styles */
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 48px;
+  margin-bottom: 56px;
+  max-width: 100%;
 }
 
 .header-left h1 {
   font-size: 32px;
   font-weight: 700;
+  letter-spacing: -0.5px;
   margin-bottom: 8px;
+  color: var(--text-primary);
 }
 
-.header-left p {
+.invoice-count {
   font-size: 13px;
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 40px;
 }
 
+/* New Invoice Button */
 .btn-new-invoice {
-  background: var(--primary-color);
+  background: var(--primary);
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 24px;
+  padding: 12px 18px 12px 12px;
+  border-radius: 40px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: opacity 0.2s;
+  gap: 16px;
+  transition: all 0.2s;
 }
 
-.btn-new-invoice span {
+.btn-new-invoice:hover {
+  background: var(--primary-hover);
+  transform: scale(1.02);
+}
+
+.plus-icon {
   background: white;
-  color: var(--primary-color);
-  width: 28px;
-  height: 28px;
+  color: var(--primary);
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
-}
-
-.btn-new-invoice:hover {
-  opacity: 0.8;
-}
-
-.btn-primary {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 24px;
   font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  transition: opacity 0.2s;
 }
 
-.btn-primary:hover {
-  opacity: 0.8;
+.btn-text {
+  font-size: 15px;
+  letter-spacing: -0.2px;
 }
 
-.btn-secondary {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
+/* Go Back Button */
+.btn-go-back {
+  background: none;
   border: none;
-  padding: 14px 24px;
-  border-radius: 24px;
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.btn-secondary:hover {
-  opacity: 0.8;
-}
-
-.btn-danger {
-  background: var(--danger-color);
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 24px;
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.btn-danger:hover {
-  opacity: 0.8;
-}
-
-.btn-draft {
-  background: var(--bg-tertiary);
   color: var(--text-primary);
-  border: none;
-  padding: 14px 24px;
-  border-radius: 24px;
-  font-weight: 700;
   font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding: 4px 0;
   transition: opacity 0.2s;
 }
 
-.btn-draft:hover {
-  opacity: 0.8;
+.btn-go-back:hover {
+  opacity: 0.7;
 }
 
+.arrow {
+  font-size: 18px;
+}
+
+/* App Main */
+.app-main {
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form and Detail Containers */
+.form-container,
+.detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .app {
-    padding: 24px 16px;
+  .main-content {
+    margin-left: 72px;
+    padding: 32px 20px;
   }
   
   .app-header {
-    flex-direction: column;
-    gap: 24px;
-    align-items: stretch;
+    margin-bottom: 32px;
+  }
+  
+  .header-left h1 {
+    font-size: 24px;
   }
   
   .header-right {
-    justify-content: space-between;
+    gap: 20px;
   }
   
   .btn-new-invoice {
-    padding: 10px 16px;
+    padding: 10px 14px 10px 10px;
   }
   
-  .btn-new-invoice span {
-    width: 24px;
-    height: 24px;
-    font-size: 16px;
+  .btn-text {
+    display: none;
+  }
+  
+  .plus-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    margin-left: 0;
+    padding: 24px 16px;
+  }
+  
+  .invoice-count {
+    font-size: 12px;
   }
 }

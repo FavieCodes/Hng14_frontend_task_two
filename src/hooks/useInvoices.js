@@ -11,65 +11,9 @@ export const useInvoices = () => {
     if (stored) {
       setInvoices(JSON.parse(stored));
     } else {
-      // Sample data
-      const sampleInvoices = [
-        {
-          id: 'INV-001',
-          createdAt: '2024-01-15',
-          paymentDue: '2024-02-15',
-          description: 'Web Development',
-          paymentTerms: 30,
-          clientName: 'John Smith',
-          clientEmail: 'john@example.com',
-          status: 'paid',
-          senderAddress: {
-            street: '123 Main St',
-            city: 'New York',
-            postCode: '10001',
-            country: 'USA'
-          },
-          clientAddress: {
-            street: '456 Oak Ave',
-            city: 'Los Angeles',
-            postCode: '90001',
-            country: 'USA'
-          },
-          items: [
-            { name: 'Website Design', quantity: 1, price: 500, total: 500 },
-            { name: 'SEO Optimization', quantity: 1, price: 300, total: 300 }
-          ],
-          total: 800
-        },
-        {
-          id: 'INV-002',
-          createdAt: '2024-01-20',
-          paymentDue: '2024-02-19',
-          description: 'Mobile App',
-          paymentTerms: 30,
-          clientName: 'Sarah Johnson',
-          clientEmail: 'sarah@example.com',
-          status: 'pending',
-          senderAddress: {
-            street: '123 Main St',
-            city: 'New York',
-            postCode: '10001',
-            country: 'USA'
-          },
-          clientAddress: {
-            street: '789 Pine Rd',
-            city: 'Chicago',
-            postCode: '60601',
-            country: 'USA'
-          },
-          items: [
-            { name: 'iOS Development', quantity: 1, price: 1200, total: 1200 },
-            { name: 'Android Development', quantity: 1, price: 1200, total: 1200 }
-          ],
-          total: 2400
-        }
-      ];
-      setInvoices(sampleInvoices);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(sampleInvoices));
+      // Start with empty array - no sample invoices
+      setInvoices([]);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
     }
     setLoading(false);
   }, []);
@@ -80,7 +24,9 @@ export const useInvoices = () => {
   };
 
   const addInvoice = (invoice) => {
-    const newInvoice = { ...invoice, id: `INV-${Date.now()}` };
+    // Generate a unique ID (e.g., XM9141 format)
+    const newId = `INV-${Math.floor(Math.random() * 10000)}`;
+    const newInvoice = { ...invoice, id: newId };
     saveToLocalStorage([...invoices, newInvoice]);
     return newInvoice;
   };
@@ -104,19 +50,12 @@ export const useInvoices = () => {
     saveToLocalStorage(updated);
   };
 
-  const saveAsDraft = (invoice) => {
-    const draftInvoice = { ...invoice, status: 'draft', id: `INV-${Date.now()}` };
-    saveToLocalStorage([...invoices, draftInvoice]);
-    return draftInvoice;
-  };
-
   return {
     invoices,
     loading,
     addInvoice,
     updateInvoice,
     deleteInvoice,
-    markAsPaid,
-    saveAsDraft
+    markAsPaid
   };
 };

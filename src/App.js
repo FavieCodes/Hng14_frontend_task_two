@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { useInvoices } from './hooks/useInvoices';
 import InvoiceList from './components/InvoiceList/InvoiceList';
 import InvoiceDetail from './components/InvoiceDetail/InvoiceDetail';
 import InvoiceForm from './components/InvoiceForm/InvoiceForm';
 import Filter from './components/Filter/Filter';
-import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 import Modal from './components/Modal/Modal';
+import Sidebar from './components/Sidebar/Sidebar';
 import './App.css';
 
 const AppContent = () => {
@@ -17,11 +17,6 @@ const AppContent = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [invoiceToDelete, setInvoiceToDelete] = useState(null);
   const [activeFilters, setActiveFilters] = useState([]);
-  const { isDarkMode } = useTheme();
-
-  useEffect(() => {
-    document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
-  }, [isDarkMode]);
 
   const filteredInvoices = activeFilters.length === 0
     ? invoices
@@ -54,67 +49,87 @@ const AppContent = () => {
   };
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <div className="header-left">
-          <h1>Invoices</h1>
-          <p>{filteredInvoices.length} {filteredInvoices.length === 1 ? 'invoice' : 'invoices'}</p>
-        </div>
-        <div className="header-right">
-          <Filter onFilterChange={setActiveFilters} activeFilters={activeFilters} />
-          <ThemeToggle />
-          <button className="btn-new-invoice" onClick={() => {
-            setEditingInvoice(null);
-            setShowForm(true);
-          }}>
-            <span>+</span> New Invoice
-          </button>
-        </div>
-      </header>
-
-      <main>
-        {showForm ? (
-          <InvoiceForm
-            initialData={editingInvoice}
-            onSubmit={editingInvoice ? handleUpdateInvoice : handleCreateInvoice}
-            onCancel={() => {
-              setShowForm(false);
+    <div className="app-layout">
+      <Sidebar />
+      <div className="main-content">
+        <header className="app-header">
+          <div className="header-left">
+            <h1>Invoices</h1>
+            <p className="invoice-count">
+              {filteredInvoices.length === 0 
+                ? 'No invoices' 
+                : `There ${filteredInvoices.length === 1 ? 'is' : 'are'} ${filteredInvoices.length} total ${filteredInvoices.length === 1 ? 'invoice' : 'invoices'}`}
+            </p>
+          </div>
+          <div className="header-right">
+            <Filter onFilterChange={setActiveFilters} activeFilters={activeFilters} />
+            <button className="btn-new-invoice" onClick={() => {
               setEditingInvoice(null);
-            }}
-            isEditing={!!editingInvoice}
-          />
-        ) : selectedInvoice ? (
-          <InvoiceDetail
-            invoice={selectedInvoice}
-            onEdit={() => {
-              setEditingInvoice(selectedInvoice);
               setShowForm(true);
-              setSelectedInvoiceId(null);
-            }}
-            onDelete={() => {
-              setInvoiceToDelete(selectedInvoice.id);
-              setShowDeleteModal(true);
-            }}
-            onMarkAsPaid={handleMarkAsPaid}
-            onGoBack={() => setSelectedInvoiceId(null)}
-          />
-        ) : (
-          <InvoiceList
-            invoices={filteredInvoices}
-            onInvoiceClick={(id) => setSelectedInvoiceId(id)}
-          />
-        )}
-      </main>
+            }}>
+              <span className="plus-icon">+</span>
+              <span className="btn-text">New Invoice</span>
+            </button>
+          </div>
+        </header>
 
-      <Modal
-        isOpen={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}
-        title="Confirm Deletion"
-        onConfirm={handleDeleteConfirm}
-      >
-        <p>Are you sure you want to delete this invoice?</p>
-        <p>This action cannot be undone.</p>
-      </Modal>
+        <main className="app-main">
+          {showForm ? (
+            <div className="form-container">
+              <button className="btn-go-back" onClick={() => {
+                setShowForm(false);
+                setEditingInvoice(null);
+              }}>
+                <span className="arrow">←</span> Go back
+              </button>
+              <InvoiceForm
+                initialData={editingInvoice}
+                onSubmit={editingInvoice ? handleUpdateInvoice : handleCreateInvoice}
+                onCancel={() => {
+                  setShowForm(false);
+                  setEditingInvoice(null);
+                }}
+                isEditing={!!editingInvoice}
+              />
+            </div>
+          ) : selectedInvoice ? (
+            <div className="detail-container">
+              <button className="btn-go-back" onClick={() => setSelectedInvoiceId(null)}>
+                <span className="arrow">←</span> Go back
+              </button>
+              <InvoiceDetail
+                invoice={selectedInvoice}
+                onEdit={() => {
+                  setEditingInvoice(selectedInvoice);
+                  setShowForm(true);
+                  setSelectedInvoiceId(null);
+                }}
+                onDelete={() => {
+                  setInvoiceToDelete(selectedInvoice.id);
+                  setShowDeleteModal(true);
+                }}
+                onMarkAsPaid={handleMarkAsPaid}
+                onGoBack={() => setSelectedInvoiceId(null)}
+              />
+            </div>
+          ) : (
+            <InvoiceList
+              invoices={filteredInvoices}
+              onInvoiceClick={(id) => setSelectedInvoiceId(id)}
+            />
+          )}
+        </main>
+
+        <Modal
+          isOpen={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          title="Confirm Deletion"
+          onConfirm={handleDeleteConfirm}
+        >
+          <p>Are you sure you want to delete this invoice?</p>
+          <p>This action cannot be undone.</p>
+        </Modal>
+      </div>
     </div>
   );
 };
