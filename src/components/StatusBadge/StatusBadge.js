@@ -1,24 +1,38 @@
 import React from 'react';
-import './StatusBadge.css';
 
 const StatusBadge = ({ status }) => {
-  const getStatusClass = () => {
+  const getStatusStyle = () => {
     switch(status) {
-      case 'paid': return 'status-paid';
-      case 'pending': return 'status-pending';
-      case 'draft': return 'status-draft';
-      default: return '';
+      case 'paid':
+        return { backgroundColor: 'rgba(51, 214, 159, 0.06)', color: '#33D69F' };
+      case 'pending':
+        return { backgroundColor: 'rgba(255, 143, 0, 0.06)', color: '#FF8F00' };
+      case 'draft':
+        return { backgroundColor: 'rgba(55, 59, 83, 0.06)', color: '#373B53' };
+      default:
+        return {};
     }
   };
 
-  const getStatusText = () => {
-    return status.charAt(0).toUpperCase() + status.slice(1);
-  };
-
   return (
-    <div className={`status-badge ${getStatusClass()}`}>
-      <span className="status-dot"></span>
-      <span>{getStatusText()}</span>
+    <div style={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      padding: '8px 16px',
+      borderRadius: '6px',
+      fontWeight: '700',
+      fontSize: '12px',
+      textTransform: 'capitalize',
+      ...getStatusStyle()
+    }}>
+      <span style={{
+        width: '8px',
+        height: '8px',
+        borderRadius: '50%',
+        backgroundColor: getStatusStyle().color
+      }}></span>
+      <span>{status}</span>
     </div>
   );
 };
