@@ -55,7 +55,7 @@
   color: var(--primary);
 }
 
-/* Empty State */
+/* Empty State - with local image */
 .empty-state {
   text-align: center;
   padding: 80px 24px;
@@ -64,6 +64,15 @@
 
 .empty-illustration {
   margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-image {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
   opacity: 0.8;
 }
 
@@ -84,7 +93,7 @@
 }
 
 .empty-message strong {
-  color: var(--primary);
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -134,5 +143,9 @@
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
+  }
+  
+  .empty-image {
+    max-width: 150px;
   }
 }

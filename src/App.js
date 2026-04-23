@@ -24,13 +24,25 @@ const AppContent = () => {
 
   const selectedInvoice = invoices.find(inv => inv.id === selectedInvoiceId);
 
-  const handleCreateInvoice = (invoice) => {
-    addInvoice(invoice);
+  const handleCreateInvoice = (invoice, asDraft = false) => {
+    const newInvoice = { ...invoice, status: asDraft ? 'draft' : 'pending' };
+    addInvoice(newInvoice);
     setShowForm(false);
   };
 
-  const handleUpdateInvoice = (invoice) => {
-    updateInvoice(editingInvoice.id, invoice);
+  const handleUpdateInvoice = (invoice, asDraft = false) => {
+    let newStatus = editingInvoice.status;
+    
+    if (asDraft) {
+      newStatus = 'draft';
+    } else if (editingInvoice.status === 'draft') {
+      newStatus = 'pending';
+    } else {
+      newStatus = editingInvoice.status;
+    }
+    
+    const updatedInvoice = { ...invoice, status: newStatus };
+    updateInvoice(editingInvoice.id, updatedInvoice);
     setEditingInvoice(null);
     setShowForm(false);
   };
@@ -46,6 +58,7 @@ const AppContent = () => {
 
   const handleMarkAsPaid = () => {
     markAsPaid(selectedInvoiceId);
+    setSelectedInvoiceId(null);
   };
 
   return (
@@ -74,28 +87,18 @@ const AppContent = () => {
         </header>
 
         <main className="app-main">
-          {showForm ? (
-            <div className="form-container">
-              <button className="btn-go-back" onClick={() => {
-                setShowForm(false);
-                setEditingInvoice(null);
-              }}>
-                <span className="arrow">←</span> Go back
-              </button>
-              <InvoiceForm
-                initialData={editingInvoice}
-                onSubmit={editingInvoice ? handleUpdateInvoice : handleCreateInvoice}
-                onCancel={() => {
-                  setShowForm(false);
-                  setEditingInvoice(null);
-                }}
-                isEditing={!!editingInvoice}
-              />
-            </div>
-          ) : selectedInvoice ? (
-            <div className="detail-container">
-              <button className="btn-go-back" onClick={() => setSelectedInvoiceId(null)}>
-                <span className="arrow">←</span> Go back
+          <InvoiceList
+            invoices={filteredInvoices}
+            onInvoiceClick={(id) => setSelectedInvoiceId(id)}
+          />
+        </main>
+
+        {/* Invoice Detail Modal - Flush to sidebar */}
+        {selectedInvoice && (
+          <div className="modal-overlay-page" onClick={() => setSelectedInvoiceId(null)}>
+            <div className="detail-modal" onClick={(e) => e.stopPropagation()}>
+              <button className="btn-close-modal" onClick={() => setSelectedInvoiceId(null)}>
+                ×
               </button>
               <InvoiceDetail
                 invoice={selectedInvoice}
@@ -107,28 +110,54 @@ const AppContent = () => {
                 onDelete={() => {
                   setInvoiceToDelete(selectedInvoice.id);
                   setShowDeleteModal(true);
+                  setSelectedInvoiceId(null);
                 }}
                 onMarkAsPaid={handleMarkAsPaid}
                 onGoBack={() => setSelectedInvoiceId(null)}
               />
             </div>
-          ) : (
-            <InvoiceList
-              invoices={filteredInvoices}
-              onInvoiceClick={(id) => setSelectedInvoiceId(id)}
-            />
-          )}
-        </main>
+          </div>
+        )}
+
+        {/* Invoice Form Modal - Flush to sidebar */}
+        {showForm && (
+          <div className="modal-overlay-page" onClick={() => {
+            setShowForm(false);
+            setEditingInvoice(null);
+          }}>
+            <div className="form-modal" onClick={(e) => e.stopPropagation()}>
+              <button className="btn-close-modal" onClick={() => {
+                setShowForm(false);
+                setEditingInvoice(null);
+              }}>
+                ×
+              </button>
+              <InvoiceForm
+                initialData={editingInvoice}
+                onSubmit={(invoice, asDraft) => {
+                  if (editingInvoice) {
+                    handleUpdateInvoice(invoice, asDraft);
+                  } else {
+                    handleCreateInvoice(invoice, asDraft);
+                  }
+                }}
+                onCancel={() => {
+                  setShowForm(false);
+                  setEditingInvoice(null);
+                }}
+                isEditing={!!editingInvoice}
+              />
+            </div>
+          </div>
+        )}
 
         <Modal
           isOpen={showDeleteModal}
           onClose={() => setShowDeleteModal(false)}
           title="Confirm Deletion"
           onConfirm={handleDeleteConfirm}
-        >
-          <p>Are you sure you want to delete this invoice?</p>
-          <p>This action cannot be undone.</p>
-        </Modal>
+          invoiceId={invoiceToDelete}
+        />
       </div>
     </div>
   );

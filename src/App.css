@@ -69,10 +69,110 @@ body {
 
 .main-content {
   flex: 1;
-  margin-left: 80px; /* Matches new sidebar width */
+  margin-left: 80px;
   padding: 60px 48px;
   transition: margin-left 0.3s ease;
   background: var(--bg-main);
+}
+
+/* Modal Overlay - Flush against sidebar, no gap */
+.modal-overlay-page {
+  position: fixed;
+  top: 0;
+  left: 80px;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+  padding: 0;
+}
+
+/* Form Modal - Narrow width, flush to sidebar */
+.form-modal {
+  background: var(--bg-form);
+  border-radius: 0;
+  max-width: 600px;
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideInFromLeft 0.3s ease;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+}
+
+/* Detail Modal - Same style */
+.detail-modal {
+  background: var(--bg-card);
+  border-radius: 0;
+  max-width: 600px;
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideInFromLeft 0.3s ease;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.btn-close-modal {
+  position: sticky;
+  top: 20px;
+  right: 20px;
+  float: right;
+  background: var(--bg-item);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 10;
+  margin: 20px 20px 0 0;
+}
+
+.btn-close-modal:hover {
+  background: var(--primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Hide scrollbar for modal but keep functionality */
+.form-modal::-webkit-scrollbar,
+.detail-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.form-modal::-webkit-scrollbar-track,
+.detail-modal::-webkit-scrollbar-track {
+  background: var(--border-color);
+}
+
+.form-modal::-webkit-scrollbar-thumb,
+.detail-modal::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
 }
 
 /* Header Styles */
@@ -143,30 +243,6 @@ body {
   letter-spacing: -0.2px;
 }
 
-/* Go Back Button */
-.btn-go-back {
-  background: none;
-  border: none;
-  color: var(--text-primary);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 32px;
-  padding: 4px 0;
-  transition: opacity 0.2s;
-}
-
-.btn-go-back:hover {
-  opacity: 0.7;
-}
-
-.arrow {
-  font-size: 18px;
-}
-
 /* App Main */
 .app-main {
   max-width: 800px;
@@ -177,26 +253,27 @@ body {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
-}
-
-/* Form and Detail Containers */
-.form-container,
-.detail-container {
-  max-width: 800px;
-  margin: 0 auto;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 64px; /* Matches smaller sidebar on tablet */
+    margin-left: 64px;
     padding: 32px 20px;
+  }
+  
+  .modal-overlay-page {
+    left: 64px;
+  }
+  
+  .form-modal,
+  .detail-modal {
+    max-width: 100%;
+    width: 100%;
   }
   
   .app-header {
@@ -232,7 +309,20 @@ body {
     padding: 24px 16px;
   }
   
+  .modal-overlay-page {
+    left: 0;
+  }
+  
   .invoice-count {
     font-size: 12px;
+  }
+  
+  .btn-close-modal {
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+    top: 12px;
+    right: 12px;
+    margin: 12px 12px 0 0;
   }
 }

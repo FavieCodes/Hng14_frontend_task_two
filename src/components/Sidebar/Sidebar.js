@@ -16,11 +16,15 @@ const Sidebar = () => {
       </div>
       <div className="sidebar-actions">
         <ThemeToggle />
+        <div className="divider"></div>
         <div className="profile-container" role="button" tabIndex={0}>
           <img 
-            src="https://ui-avatars.com/api/?background=7C5DFA&color=fff&rounded=true&size=40&bold=true&name=JD" 
+            src="/profile.png"
             alt="Profile" 
             className="profile-image"
+            onError={(e) => {
+              e.target.src = 'https://ui-avatars.com/api/?background=7C5DFA&color=fff&rounded=true&size=40&bold=true&name=U';
+            }}
           />
         </div>
       </div>

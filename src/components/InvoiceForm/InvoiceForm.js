@@ -4,12 +4,11 @@ import './InvoiceForm.css';
 const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => {
   const [formData, setFormData] = useState(initialData || {
     createdAt: new Date().toISOString().split('T')[0],
-    paymentDue: '',
+    paymentTerms: 30,
     description: '',
     clientName: '',
     clientEmail: '',
-    status: 'pending',
-    senderAddress: { street: '19 Union Terrace', city: 'London', postCode: 'E1 3EZ', country: 'United Kingdom' },
+    senderAddress: { street: '', city: '', postCode: '', country: '' },
     clientAddress: { street: '', city: '', postCode: '', country: '' },
     items: [{ name: '', quantity: 1, price: 0, total: 0 }]
   });
@@ -51,14 +50,13 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
       sum + (item.quantity * item.price), 0
     );
     
-    const paymentDue = calculatePaymentDue(formData.createdAt, formData.paymentTerms || 30);
+    const paymentDue = calculatePaymentDue(formData.createdAt, formData.paymentTerms);
     
     onSubmit({ 
       ...formData, 
       total, 
-      paymentDue,
-      status: asDraft ? 'draft' : formData.status 
-    });
+      paymentDue
+    }, asDraft);
   };
 
   const addItem = () => {
@@ -93,6 +91,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
           <div className="form-group">
             <label>Street Address</label>
             <input
+              placeholder="Enter street address"
               value={formData.senderAddress.street}
               onChange={(e) => setFormData({
                 ...formData,
@@ -104,6 +103,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <div className="form-group">
               <label>City</label>
               <input
+                placeholder="Enter city"
                 value={formData.senderAddress.city}
                 onChange={(e) => setFormData({
                   ...formData,
@@ -114,6 +114,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <div className="form-group">
               <label>Post Code</label>
               <input
+                placeholder="Enter post code"
                 value={formData.senderAddress.postCode}
                 onChange={(e) => setFormData({
                   ...formData,
@@ -124,6 +125,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <div className="form-group">
               <label>Country</label>
               <input
+                placeholder="Enter country"
                 value={formData.senderAddress.country}
                 onChange={(e) => setFormData({
                   ...formData,
@@ -141,6 +143,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <label>Client's Name</label>
             <div className="error-wrapper">
               <input
+                placeholder="Enter client name"
                 className={errors.clientName ? 'error' : ''}
                 value={formData.clientName}
                 onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
@@ -153,6 +156,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <div className="error-wrapper">
               <input
                 type="email"
+                placeholder="Enter client email"
                 className={errors.clientEmail ? 'error' : ''}
                 value={formData.clientEmail}
                 onChange={(e) => setFormData({ ...formData, clientEmail: e.target.value })}
@@ -163,6 +167,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
           <div className="form-group">
             <label>Street Address</label>
             <input
+              placeholder="Enter street address"
               value={formData.clientAddress.street}
               onChange={(e) => setFormData({
                 ...formData,
@@ -174,6 +179,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <div className="form-group">
               <label>City</label>
               <input
+                placeholder="Enter city"
                 value={formData.clientAddress.city}
                 onChange={(e) => setFormData({
                   ...formData,
@@ -184,6 +190,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <div className="form-group">
               <label>Post Code</label>
               <input
+                placeholder="Enter post code"
                 value={formData.clientAddress.postCode}
                 onChange={(e) => setFormData({
                   ...formData,
@@ -194,6 +201,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <div className="form-group">
               <label>Country</label>
               <input
+                placeholder="Enter country"
                 value={formData.clientAddress.country}
                 onChange={(e) => setFormData({
                   ...formData,
@@ -218,7 +226,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <div className="form-group">
               <label>Payment Terms</label>
               <select
-                value={formData.paymentTerms || 30}
+                value={formData.paymentTerms}
                 onChange={(e) => setFormData({ ...formData, paymentTerms: parseInt(e.target.value) })}
               >
                 <option value={1}>Net 1 Day</option>
@@ -232,6 +240,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <label>Project Description</label>
             <div className="error-wrapper">
               <input
+                placeholder="Enter project description"
                 className={errors.description ? 'error' : ''}
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -255,7 +264,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
             <div key={idx} className="item-row">
               <div className="form-group">
                 <input
-                  placeholder="Item name"
+                  placeholder="Enter item name"
                   value={item.name}
                   onChange={(e) => updateItem(idx, 'name', e.target.value)}
                 />
@@ -263,6 +272,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
               <div className="form-group">
                 <input
                   type="number"
+                  placeholder="Quantity"
                   value={item.quantity}
                   onChange={(e) => updateItem(idx, 'quantity', parseInt(e.target.value) || 0)}
                   className={errors[`item_${idx}_quantity`] ? 'error' : ''}
@@ -272,6 +282,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
                 <input
                   type="number"
                   step="0.01"
+                  placeholder="Price"
                   value={item.price}
                   onChange={(e) => updateItem(idx, 'price', parseFloat(e.target.value) || 0)}
                   className={errors[`item_${idx}_price`] ? 'error' : ''}
@@ -282,6 +293,7 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
                   value={(item.quantity * item.price).toFixed(2)}
                   disabled
                   className="total-input"
+                  placeholder="0.00"
                 />
               </div>
               <button type="button" className="remove-item" onClick={() => removeItem(idx)}>
@@ -301,11 +313,9 @@ const InvoiceForm = ({ initialData, onSubmit, onCancel, isEditing = false }) => 
           <button type="button" className="btn-cancel" onClick={onCancel}>
             Cancel
           </button>
-          {!isEditing && (
-            <button type="button" className="btn-draft" onClick={(e) => handleSubmit(e, true)}>
-              Save as Draft
-            </button>
-          )}
+          <button type="button" className="btn-draft" onClick={(e) => handleSubmit(e, true)}>
+            Save as Draft
+          </button>
           <button type="submit" className="btn-save">
             {isEditing ? 'Save Changes' : 'Save & Send'}
           </button>
