@@ -134,6 +134,7 @@ Your preference is saved and persists after page reload
 ```
 
 ## 🎨 Color Scheme
+```
 Light Mode
 Background: #F8F8FB
 Card Background: #FFFFFF
@@ -150,27 +151,33 @@ Status Colors
 Paid: Green (#33D69F)
 Pending: Orange (#FF8F00)
 Draft: Dark/Light gray based on theme
+```
 
 ## 📱 Responsive Breakpoints
+```
 Mobile: 320px - 767px
 Tablet: 768px - 1023px
 Desktop: 1024px and above
-
+```
 ## ♿ Accessibility Features
 Semantic HTML structure
+```
 ARIA labels on interactive elements
 Keyboard navigation support
 Focus trapping in modals (ESC to close)
 Proper color contrast (WCAG AA compliant)
 Form fields with associated labels
 Buttons are actual <button> elements
+```
 
 ## 🔧 Available Scripts
-Command	Description
+Command	
+```
 npm start	Runs the app in development mode
 npm run build	Builds the app for production
 npm test	Launches the test runner
-npm run eject	Ejects from Create React App
+npm run eject	Ejects from Create React 
+```
 
 ## 🧪 Testing the Application
 Manual Test Cases
