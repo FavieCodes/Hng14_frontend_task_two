@@ -4,7 +4,7 @@ A full-featured invoice management application built with React that allows user
 
 ## 🚀 Live Demo
 
-[Add your deployed link here]
+[https://hng14-frontend-task-two.vercel.app/]
 
 ## 📋 Features
 
@@ -42,6 +42,8 @@ A full-featured invoice management application built with React that allows user
 invoice-app/
 ├── public/
 │ └── index.html
+│ └── profile.png
+│ └── emptyIllustration.png
 ├── src/
 │ ├── components/
 │ │ ├── InvoiceForm/
@@ -56,6 +58,9 @@ invoice-app/
 │ │ ├── StatusBadge/
 │ │ │ ├── StatusBadge.js
 │ │ │ └── StatusBadge.css
+│ │ ├── Sidebar/
+│ │ │ ├── Sidebar.js
+│ │ │ └── Sidebar.css
 │ │ ├── Filter/
 │ │ │ ├── Filter.js
 │ │ │ └── Filter.css
@@ -88,8 +93,8 @@ text
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/invoice-app.git
-cd invoice-app
+git clone https://github.com/FavieCodes/Hng14_frontend_task_two
+cd Hng14_frontend_task_two
 Install dependencies
 
 bash
@@ -213,9 +218,9 @@ Icons from Feather Icons
 Font system from system default fonts
 
 ## 📞 Contact
-Your Name - @yourtwitter - email@example.com
+Imo Emmanuel  - imo.e.udoh@gmail.com
 
-Project Link: https://github.com/yourusername/invoice-app
+Project Link: https://github.com/FavieCodes/Hng14_frontend_task_two
 
 ## 🎯 Acceptance Criteria Checklist
 CRUD functionality works completely
