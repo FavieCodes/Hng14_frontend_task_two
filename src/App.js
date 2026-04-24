@@ -64,7 +64,7 @@ const AppContent = () => {
   return (
     <div className="app-layout">
       <Sidebar />
-      <div className="main-content">
+      <div className={`main-content ${showForm ? 'form-open' : ''}`}>
         <header className="app-header">
           <div className="header-left">
             <h1>Invoices</h1>
@@ -93,7 +93,7 @@ const AppContent = () => {
           />
         </main>
 
-        {/* Invoice Detail Modal - Flush to sidebar */}
+        {/* Invoice Detail Modal */}
         {selectedInvoice && (
           <div className="modal-overlay-page" onClick={() => setSelectedInvoiceId(null)}>
             <div className="detail-modal" onClick={(e) => e.stopPropagation()}>
@@ -119,7 +119,7 @@ const AppContent = () => {
           </div>
         )}
 
-        {/* Invoice Form Modal - Flush to sidebar */}
+        {/* Invoice Form Modal */}
         {showForm && (
           <div className="modal-overlay-page" onClick={() => {
             setShowForm(false);

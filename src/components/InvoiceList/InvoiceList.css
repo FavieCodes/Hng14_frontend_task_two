@@ -30,6 +30,11 @@
   letter-spacing: -0.25px;
 }
 
+.invoice-id-hash {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
 .invoice-date {
   font-size: 13px;
   color: var(--text-secondary);
@@ -55,7 +60,7 @@
   color: var(--primary);
 }
 
-/* Empty State - with local image */
+/* Empty State */
 .empty-state {
   text-align: center;
   padding: 80px 24px;
@@ -97,12 +102,24 @@
   font-weight: 700;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .invoice-list {
-    gap: 12px;
+/* Tablet View */
+@media (max-width: 1023px) and (min-width: 769px) {
+  .invoice-item {
+    grid-template-columns: 90px 120px 1fr 100px 100px 30px;
+    padding: 16px 20px;
   }
   
+  .invoice-id {
+    font-size: 13px;
+  }
+  
+  .invoice-amount {
+    font-size: 14px;
+  }
+}
+
+/* Mobile View - Card Layout */
+@media (max-width: 768px) {
   .invoice-item {
     grid-template-columns: 1fr 1fr;
     gap: 12px;
@@ -113,6 +130,9 @@
   .invoice-id {
     grid-column: 1;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
   
   .invoice-client {
@@ -147,5 +167,20 @@
   
   .empty-image {
     max-width: 150px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .invoice-item {
+    padding: 16px;
+  }
+  
+  .invoice-id {
+    font-size: 14px;
+  }
+  
+  .invoice-amount {
+    font-size: 16px;
   }
 }

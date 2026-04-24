@@ -11,6 +11,9 @@ const InvoiceList = ({ invoices, onInvoiceClick }) => {
             src="/emptyIllustration.png" 
             alt="No invoices illustration" 
             className="empty-image"
+            onError={(e) => {
+              e.target.src = 'https://ui-avatars.com/api/?background=7C5DFA&color=fff&size=120&bold=true&name=No+Invoices';
+            }}
           />
         </div>
         <h2 className="empty-title">There is nothing here</h2>
@@ -32,12 +35,18 @@ const InvoiceList = ({ invoices, onInvoiceClick }) => {
           tabIndex={0}
           onKeyPress={(e) => e.key === 'Enter' && onInvoiceClick(invoice.id)}
         >
-          <div className="invoice-id">#{invoice.id}</div>
+          <div className="invoice-id">
+            <span className="invoice-id-hash">#</span>{invoice.id}
+          </div>
           <div className="invoice-date">
             Due {new Date(invoice.paymentDue || invoice.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
           </div>
-          <div className="invoice-client">{invoice.clientName || 'No client'}</div>
-          <div className="invoice-amount">£ {invoice.total.toFixed(2)}</div>
+          <div className="invoice-client">
+            {invoice.clientName || 'No client'}
+          </div>
+          <div className="invoice-amount">
+            £ {invoice.total.toFixed(2)}
+          </div>
           <StatusBadge status={invoice.status} />
           <div className="invoice-arrow">
             <svg width="7" height="10" xmlns="http://www.w3.org/2000/svg">

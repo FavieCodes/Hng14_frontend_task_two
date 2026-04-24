@@ -71,7 +71,7 @@ body {
   flex: 1;
   margin-left: 80px;
   padding: 60px 48px;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s ease, padding 0.3s ease;
   background: var(--bg-main);
 }
 
@@ -95,7 +95,6 @@ body {
 /* Form Modal - Narrow width, flush to sidebar */
 .form-modal {
   background: var(--bg-form);
-  border-radius: 0;
   max-width: 600px;
   width: 100%;
   height: 100vh;
@@ -103,13 +102,11 @@ body {
   position: relative;
   animation: slideInFromLeft 0.3s ease;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-  border-radius: 0;
 }
 
 /* Detail Modal - Same style */
 .detail-modal {
   background: var(--bg-card);
-  border-radius: 0;
   max-width: 600px;
   width: 100%;
   height: 100vh;
@@ -127,6 +124,15 @@ body {
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -250,34 +256,59 @@ body {
   animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
+/* Tablet View (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 769px) {
   .main-content {
-    margin-left: 64px;
-    padding: 32px 20px;
+    margin-left: 0;
+    padding: 90px 32px 40px 32px;
   }
   
   .modal-overlay-page {
-    left: 64px;
+    left: 0;
+    top: 70px;
+  }
+  
+  .form-modal,
+  .detail-modal {
+    max-width: 550px;
+    height: calc(100vh - 70px);
+    margin-top: 70px;
+  }
+  
+  .app-header {
+    margin-bottom: 40px;
+  }
+  
+  .header-left h1 {
+    font-size: 28px;
+  }
+}
+
+/* Mobile View (up to 768px) */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 85px 20px 32px 20px;
+  }
+  
+  .modal-overlay-page {
+    left: 0;
+    top: 65px;
   }
   
   .form-modal,
   .detail-modal {
     max-width: 100%;
-    width: 100%;
+    height: calc(100vh - 65px);
+    margin-top: 65px;
+    border-radius: 0;
   }
   
   .app-header {
     margin-bottom: 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
   }
   
   .header-left h1 {
@@ -285,7 +316,9 @@ body {
   }
   
   .header-right {
-    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+    gap: 16px;
   }
   
   .btn-new-invoice {
@@ -293,7 +326,8 @@ body {
   }
   
   .btn-text {
-    display: none;
+    display: inline-block;
+    font-size: 13px;
   }
   
   .plus-icon {
@@ -301,28 +335,37 @@ body {
     height: 28px;
     font-size: 18px;
   }
-}
-
-@media (max-width: 480px) {
-  .main-content {
-    margin-left: 0;
-    padding: 24px 16px;
-  }
-  
-  .modal-overlay-page {
-    left: 0;
-  }
   
   .invoice-count {
     font-size: 12px;
   }
+}
+
+/* Small Mobile (up to 480px) */
+@media (max-width: 480px) {
+  .main-content {
+    padding: 80px 16px 24px 16px;
+  }
   
-  .btn-close-modal {
-    width: 28px;
-    height: 28px;
-    font-size: 18px;
-    top: 12px;
-    right: 12px;
-    margin: 12px 12px 0 0;
+  .modal-overlay-page {
+    top: 60px;
+  }
+  
+  .form-modal,
+  .detail-modal {
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+  }
+  
+  .btn-text {
+    display: none;
+  }
+  
+  .header-right {
+    justify-content: flex-end;
+  }
+  
+  .btn-new-invoice {
+    padding: 10px;
   }
 }
