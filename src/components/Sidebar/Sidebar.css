@@ -47,6 +47,11 @@
   align-items: center;
 }
 
+.logo-container svg {
+  width: 32px;
+  height: 32px;
+}
+
 .sidebar-actions {
   display: flex;
   flex-direction: column;
@@ -86,7 +91,7 @@
   border-radius: 50%;
 }
 
-/* Tablet View (768px - 1023px) - Sidebar becomes top navbar */
+/* Tablet View (768px - 1023px) - Same as desktop but horizontal */
 @media (max-width: 1023px) and (min-width: 769px) {
   .sidebar {
     position: fixed;
@@ -116,8 +121,8 @@
   }
   
   .logo-container svg {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
   
   .sidebar-actions {
@@ -141,7 +146,7 @@
   }
 }
 
-/* Mobile View (up to 768px) - Sidebar becomes top navbar */
+/* Mobile View (up to 768px) - Same as tablet */
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;

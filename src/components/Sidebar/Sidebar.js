@@ -19,7 +19,7 @@ const Sidebar = () => {
         <div className="divider"></div>
         <div className="profile-container" role="button" tabIndex={0}>
           <img 
-            src="/profile.png"
+            src="/profile.jpg" 
             alt="Profile" 
             className="profile-image"
             onError={(e) => {
