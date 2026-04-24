@@ -39,6 +39,7 @@ A full-featured invoice management application built with React that allows user
 - **React Hooks** - State management (useState, useEffect, useContext)
 
 ## 📁 Project Structure
+```
 invoice-app/
 ├── public/
 │ └── index.html
@@ -80,7 +81,8 @@ invoice-app/
 ├── package.json
 └── README.md
 
-text
+
+```
 
 ## 🚦 Getting Started
 
@@ -242,15 +244,5 @@ Deploy to Vercel
 bash
 npm install -g vercel
 vercel
-Deploy to Netlify
-bash
-npm run build
-# Drag and drop the 'build' folder to Netlify
-Deploy to GitHub Pages
-bash
-npm install gh-pages --save-dev
-# Add homepage to package.json
-npm run build
-npm run deploy
 
 
