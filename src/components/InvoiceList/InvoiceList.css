@@ -1,35 +1,40 @@
 .invoice-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   width: 100%;
   overflow: visible;
 }
 
 .invoice-item {
   display: grid;
-  grid-template-columns: 100px 140px 1fr 120px 110px 30px;
+  grid-template-columns: 120px 140px 1fr 110px 100px 30px;
   align-items: center;
   background: var(--bg-card);
-  padding: 20px 24px;
+  padding: 16px 20px;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
   border: 1px solid transparent;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  overflow: hidden;
 }
 
 .invoice-item:hover {
-  transform: translateX(8px);
+  transform: translateX(4px);
   border-color: var(--primary);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .invoice-id {
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-primary);
   letter-spacing: -0.25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .invoice-id-hash {
@@ -38,28 +43,39 @@
 }
 
 .invoice-date {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .invoice-client {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 8px;
 }
 
 .invoice-amount {
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   color: var(--text-primary);
   text-align: right;
   letter-spacing: -0.25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .invoice-arrow {
   text-align: right;
   color: var(--primary);
+  white-space: nowrap;
 }
 
 /* Empty State - Centered without scrolling */
@@ -112,16 +128,20 @@
 /* Tablet View */
 @media (max-width: 1023px) and (min-width: 769px) {
   .invoice-item {
-    grid-template-columns: 100px 140px 1fr 120px 110px 30px;
-    padding: 16px 20px;
+    grid-template-columns: 110px 130px 1fr 100px 90px 30px;
+    padding: 14px 18px;
   }
   
   .invoice-id {
-    font-size: 14px;
+    font-size: 12px;
   }
   
   .invoice-amount {
-    font-size: 16px;
+    font-size: 13px;
+  }
+  
+  .invoice-client {
+    font-size: 11px;
   }
   
   .empty-state {
@@ -134,40 +154,72 @@
   }
 }
 
-/* Mobile View */
+/* Mobile View - Card Layout to prevent overflow */
 @media (max-width: 768px) {
   .invoice-list {
     gap: 12px;
-    overflow: visible;
   }
   
+  /* Switch to card layout on mobile to prevent overflow */
   .invoice-item {
-    display: grid;
-    grid-template-columns: 100px 140px 1fr 120px 110px 30px;
-    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
     padding: 16px;
-    gap: 8px;
+    position: relative;
+    gap: 12px;
   }
   
   .invoice-id {
-    font-size: 13px;
-  }
-  
-  .invoice-date {
-    font-size: 12px;
+    order: 1;
+    width: auto;
+    font-size: 14px;
+    white-space: normal;
+    word-break: break-word;
   }
   
   .invoice-client {
+    order: 2;
+    width: auto;
+    margin-left: auto;
+    text-align: right;
+    font-size: 13px;
+    white-space: normal;
+    word-break: break-word;
+    max-width: 50%;
+  }
+  
+  .invoice-date {
+    order: 3;
+    width: auto;
     font-size: 12px;
+    white-space: normal;
   }
   
   .invoice-amount {
-    font-size: 14px;
+    order: 4;
+    width: auto;
+    margin-left: auto;
+    text-align: right;
+    font-size: 16px;
+    white-space: normal;
   }
   
-  .invoice-arrow svg {
-    width: 6px;
-    height: 9px;
+  .invoice-status-wrapper {
+    order: 5;
+    width: 100%;
+    margin-top: 8px;
+  }
+  
+  .invoice-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Hide the status badge wrapper label if any */
+  .invoice-status-wrapper .status-badge {
+    width: fit-content;
   }
   
   .empty-state {
@@ -192,25 +244,35 @@
 /* Small Mobile */
 @media (max-width: 480px) {
   .invoice-item {
-    grid-template-columns: 90px 120px 1fr 100px 90px 25px;
-    padding: 12px;
-    gap: 6px;
+    padding: 14px;
+    gap: 10px;
   }
   
   .invoice-id {
+    font-size: 13px;
+    max-width: 60%;
+  }
+  
+  .invoice-client {
     font-size: 12px;
+    max-width: 40%;
   }
   
   .invoice-date {
     font-size: 11px;
   }
   
-  .invoice-client {
-    font-size: 11px;
+  .invoice-amount {
+    font-size: 14px;
   }
   
-  .invoice-amount {
-    font-size: 13px;
+  .invoice-arrow {
+    right: 12px;
+  }
+  
+  .invoice-arrow svg {
+    width: 5px;
+    height: 8px;
   }
   
   .empty-state {
@@ -224,5 +286,35 @@
   
   .empty-title {
     font-size: 16px;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 375px) {
+  .invoice-item {
+    padding: 12px;
+    gap: 8px;
+  }
+  
+  .invoice-id {
+    font-size: 12px;
+    max-width: 55%;
+  }
+  
+  .invoice-client {
+    font-size: 11px;
+    max-width: 45%;
+  }
+  
+  .invoice-date {
+    font-size: 10px;
+  }
+  
+  .invoice-amount {
+    font-size: 13px;
+  }
+  
+  .invoice-arrow {
+    right: 10px;
   }
 }
