@@ -7,7 +7,16 @@ const Sidebar = () => {
     <aside className="sidebar">
       <div className="sidebar-logo">
         <div className="logo-container">
-          <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <img 
+            src="/logo.png" 
+            alt="Logo" 
+            className="logo-image"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'block';
+            }}
+          />
+          <svg className="logo-svg-fallback" width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'none' }}>
             <rect width="40" height="40" rx="20" fill="#7C5DFA"/>
             <path d="M20 12L24 20H16L20 12Z" fill="white" fillOpacity="0.8"/>
             <path d="M20 28L16 20H24L20 28Z" fill="white"/>
@@ -19,7 +28,7 @@ const Sidebar = () => {
         <div className="divider"></div>
         <div className="profile-container" role="button" tabIndex={0}>
           <img 
-            src="/profile.jpg" 
+            src="/profile.png" 
             alt="Profile" 
             className="profile-image"
             onError={(e) => {

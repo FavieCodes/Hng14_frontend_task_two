@@ -58,21 +58,40 @@ body {
   background: var(--bg-main);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
-  overflow-x: hidden;
+  overflow: hidden;
+  height: 100vh;
 }
 
 /* App Layout with Sidebar */
 .app-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .main-content {
   flex: 1;
   margin-left: 80px;
-  padding: 60px 48px;
+  padding: 40px 48px;
   transition: margin-left 0.3s ease, padding 0.3s ease;
   background: var(--bg-main);
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar for main content when needed */
+.main-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: var(--border-color);
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
 }
 
 /* Modal Overlay - Flush against sidebar, no gap */
@@ -181,12 +200,12 @@ body {
   border-radius: 3px;
 }
 
-/* Header Styles */
+/* Header Styles - Keep on same row for all devices */
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 56px;
+  margin-bottom: 32px;
   max-width: 100%;
 }
 
@@ -194,7 +213,7 @@ body {
   font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.5px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   color: var(--text-primary);
 }
 
@@ -249,18 +268,20 @@ body {
   letter-spacing: -0.2px;
 }
 
-/* App Main */
+/* App Main - Make all invoices visible without scroll */
 .app-main {
   max-width: 800px;
   margin: 0 auto;
   animation: fadeIn 0.3s ease;
+  height: auto;
+  overflow: visible;
 }
 
 /* Tablet View (768px - 1023px) */
 @media (max-width: 1023px) and (min-width: 769px) {
   .main-content {
     margin-left: 0;
-    padding: 90px 32px 40px 32px;
+    padding: 90px 32px 32px 32px;
   }
   
   .modal-overlay-page {
@@ -276,19 +297,40 @@ body {
   }
   
   .app-header {
-    margin-bottom: 40px;
+    margin-bottom: 28px;
   }
   
   .header-left h1 {
     font-size: 28px;
   }
+  
+  .header-right {
+    width: auto;
+    justify-content: flex-end;
+  }
+  
+  .btn-text {
+    display: inline-block;
+  }
 }
 
 /* Mobile View (up to 768px) */
 @media (max-width: 768px) {
+  body {
+    overflow: auto;
+    height: auto;
+  }
+  
+  .app-layout {
+    height: auto;
+    overflow: visible;
+  }
+  
   .main-content {
     margin-left: 0;
     padding: 85px 20px 32px 20px;
+    height: auto;
+    overflow-y: visible;
   }
   
   .modal-overlay-page {
@@ -304,11 +346,12 @@ body {
     border-radius: 0;
   }
   
+  /* Keep header on same row */
   .app-header {
-    margin-bottom: 32px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+    margin-bottom: 24px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
   
   .header-left h1 {
@@ -316,9 +359,9 @@ body {
   }
   
   .header-right {
-    width: 100%;
-    justify-content: space-between;
-    gap: 16px;
+    width: auto;
+    justify-content: flex-end;
+    gap: 20px;
   }
   
   .btn-new-invoice {
@@ -357,15 +400,29 @@ body {
     margin-top: 60px;
   }
   
+
+  .app-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  
   .btn-text {
     display: none;
   }
   
   .header-right {
-    justify-content: flex-end;
+    gap: 12px;
   }
   
   .btn-new-invoice {
     padding: 10px;
+  }
+  
+  .plus-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
   }
 }

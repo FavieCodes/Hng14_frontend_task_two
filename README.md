@@ -181,6 +181,7 @@ npm run eject	Ejects from Create React
 
 ## 🧪 Testing the Application
 Manual Test Cases
+```
 Create Invoice
 Try submitting with empty fields → Should show validation errors
 Fill all fields correctly → Invoice should appear in list
@@ -197,6 +198,7 @@ Select multiple statuses → Shows all selected
 Dark Mode
 Toggle theme → Colors change globally
 Refresh page → Theme preference maintained
+```
 
 ## 🐛 Known Issues
 None currently. Report issues on GitHub.
@@ -218,7 +220,7 @@ Commit your changes (git commit -m 'Add some AmazingFeature')
 Push to the branch (git push origin feature/AmazingFeature)
 Open a Pull Request
 
-##📄 License
+## 📄 License
 This project is licensed under the MIT License - see the LICENSE file for details
 
 ## 👏 Acknowledgments
